@@ -1,0 +1,29 @@
+<!-- app/components/device-info/device-info.html -->
+<div>
+<p>
+    <!-- ko if: uniqueId().startsWith('110') -->
+    STATION: <code data-bind="text: 'LUNA'"></code><span class="glyphicon glyphicon-minus"></span>
+    <!-- /ko -->
+    <!-- ko if: uniqueId().startsWith('220') -->
+    STATION: <code data-bind="text: 'PX'"></code><span class="glyphicon glyphicon-minus"></span>
+    <!-- /ko -->
+    <!-- ko if: uniqueId().startsWith('330') -->
+    STATION: <code data-bind="text: 'PALENGKE'"></code><span class="glyphicon glyphicon-minus"></span>
+    <!-- /ko -->
+  
+    SESSION ID: <code  data-bind="text: uniqueId"></code>
+</p>
+ 
+
+  <!-- ko if: enablePasscode() -->
+  <p>
+    Passcode: <code data-bind="text: passcodeShown() ? device.passcode() || '-' : '********', click: showPasscode"></code>
+    <a href="javascript:void(0)" data-bind="click: editPasscode">
+      <i class="glyphicon glyphicon-pencil">&nbsp;</i>
+    </a>
+  </p>
+  <!-- /ko -->
+
+  <!-- Embed IP range and station mappings in HTML -->
+
+</div>
