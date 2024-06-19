@@ -38,16 +38,22 @@ define([
         return self.device.mac_address() ? self.device.mac_address().replace(/:/g, '') : '';
       });
 
-      // Extract the first part of the IP address
-      self.ipFirstPart = ko.computed(function() {
-        return self.device.ip_address() ? self.device.ip_address().split('.')[0] : '';
+      // Extract the first two characters of the IP address's first part
+      self.ipFirstTwoChars = ko.computed(function() {
+        return self.device.ip_address() ? self.device.ip_address().split('.')[0].substring(0, 2) : '';
       });
 
-      // Combine the formatted MAC address and IP first part into the final unique ID
-      self.uniqueId = ko.computed(function() {
+      // Get the MAC address excluding the first two characters
+      self.macAddressWithoutFirstTwo = ko.computed(function() {
         var mac = self.formattedMacAddress();
-        var ip = self.ipFirstPart();
-        return ip && mac ? ip + '-' + mac : '';
+        return mac.length > 2 ? mac.substring(2) : '';
+      });
+
+      // Combine the IP first two characters and the modified MAC address into the final unique ID
+      self.uniqueId = ko.computed(function() {
+        var ipFirstTwo = self.ipFirstTwoChars();
+        var macRest = self.macAddressWithoutFirstTwo();
+        return ipFirstTwo && macRest ? ipFirstTwo + macRest : '';
       });
     },
     template: tpl
